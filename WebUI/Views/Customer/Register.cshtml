@@ -1,0 +1,24 @@
+﻿@model Models.Customer
+@{
+    ViewData["Title"] = "Register";
+    Layout = "../Shared/_LoginLayout.cshtml";
+}
+
+<body class="text-center">
+    
+  <form asp-action="Register">
+    <h1 class="h3 mb-3 fw-normal">Register</h1>
+
+    <div class="form-floating">
+      <label asp-for="UserName" class="control-label"></label>
+      <input asp-for="UserName" class="form-control">
+    </div>
+    <div class="form-floating">
+      <label asp-for="Password" class="control-label"></label>
+      <input asp-for="Password" class="form-control">
+    </div>
+
+    <button class="w-40 btn btn-lg btn-primary" type="submit" value="Register">Register</button>
+  </form>
+
+</body>
