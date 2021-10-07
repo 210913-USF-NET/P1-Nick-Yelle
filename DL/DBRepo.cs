@@ -205,6 +205,8 @@ namespace DL
 
         public Order PlaceOrder(int orderId)
         {
+            //Get order based on Id, changed it, order placed variable to true,
+            //and add the date/time when placed.
             Order order = (from o in _context.Orders 
                                 where o.Id == orderId
                                 select o).SingleOrDefault();
@@ -212,22 +214,25 @@ namespace DL
             order.OrderPlaced = true;
             order.DateTimePlaced = DateTime.Now;
 
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+
             List<OrderItem> oiList = GetOrderItems(orderId);
+            Brew brew;
 
             //Go through the list of order items and decrement each one based on the quantity in the cart.
             foreach(OrderItem i in oiList)
             {
-                Brew b = GetBrewById(i.BrewId);
 
+                brew = (from b in _context.Brews
+                        where b.Id == i.BrewId
+                        select b).SingleOrDefault();
+
+                brew.Quantity -= i.Quantity;
+
+                _context.SaveChanges();
+                _context.ChangeTracker.Clear();
             }
-
-            Brew brew = (from b in _context.Brews
-                         where b.Id == )
-
-            _context.SaveChanges();
-            _context.ChangeTracker.Clear();
-
-
 
             return order;
         }
