@@ -37,9 +37,11 @@ namespace DL
 
         Customer Login(Customer cust);
 
-        Order CreateOrder(Order order);
+        Order GetOrder(Customer cust);
+        Order GetOrderById(int Id);
 
         OrderItem AddBrewToOrder(Order order, Brew brew, int quantity);
+        OrderItem AddBrewToOrder(int orderId, int BrewId, int quantity);
 
         List<OrderItem> GetOrderItems(int orderId);
 

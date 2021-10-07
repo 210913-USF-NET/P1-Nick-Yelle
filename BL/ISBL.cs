@@ -14,18 +14,18 @@ namespace BL
         Brewery GetBreweryById(int id);
         Brewery AddBrewery(Brewery b);
         List<Brewery> GetBreweries();
-
         List<Brew> GetBrews();
-
         List<Brew> GetBrews(int BreweryId);
 
         Customer AddCustomer(Customer cust);
 
         Customer Login(Customer cust);
 
-        Order CreateOrder(Order order);
+        Order GetOrder(Customer cust);
+        Order GetOrderById(int Id);
 
         OrderItem AddBrewToOrder(Order order, Brew brew, int quantity);
+        OrderItem AddBrewToOrder(int orderId, int BrewId, int quantity);
 
         List<OrderItem> GetOrderItems(int orderId);
 

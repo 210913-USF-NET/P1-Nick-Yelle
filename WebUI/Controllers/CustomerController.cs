@@ -34,6 +34,8 @@ namespace WebUI.Controllers
                 return RedirectToAction("Index", "Brewery");
             }
             Customer confiremedCust = _bl.Login(cust);
+            CurrentCustomer = confiremedCust;
+            CurrentOrder = _bl.GetOrder(confiremedCust);
             if (confiremedCust == null)
             {
                 return RedirectToAction("Register");

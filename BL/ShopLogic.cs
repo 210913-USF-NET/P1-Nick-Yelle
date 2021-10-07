@@ -43,14 +43,22 @@ namespace BL
             return _repo.Login(cust);
         }
 
-        public Order CreateOrder(Order order)
+        public Order GetOrder(Customer cust)
         {
-            return _repo.CreateOrder(order);
+            return _repo.GetOrder(cust);
+        }
+        public Order GetOrderById(int Id)
+        {
+            return _repo.GetOrderById(Id);
         }
 
         public OrderItem AddBrewToOrder(Order order, Brew brew, int quantity)
         {
             return _repo.AddBrewToOrder(order, brew, quantity);
+        }
+        public OrderItem AddBrewToOrder(int OrderId, int BrewId, int quantity)
+        {
+            return _repo.AddBrewToOrder(OrderId, BrewId, quantity);
         }
 
         public List<OrderItem> GetOrderItems(int orderId)

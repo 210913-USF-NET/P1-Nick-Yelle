@@ -15,8 +15,15 @@ namespace Models
         //Added for sake of EFCore.
         public Brew Brew { get; set; }
         public Order Order { get; set; }
+        //Added to use methods.
+
 
         //Constructors.
         public OrderItem(){}
+        public OrderItem(int OrderId, int BrewId)
+        {
+            this.OrderId = OrderId;
+            this.BrewId = BrewId;
+        }
     }
 }

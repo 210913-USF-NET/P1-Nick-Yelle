@@ -91,28 +91,39 @@ namespace DL
             return custToCheck;
         }
 
-        public Order CreateOrder(Order order)
+        public Order GetOrder(Customer cust)
         {
-            //Converting Model Object to Entity Object.
-            Order eo = new Order()
+            Order retrievedOrder = (from o in _context.Orders
+                                    where o.CustomerId == cust.Id && o.OrderPlaced == false
+                                    select o).SingleOrDefault();
+
+            if(retrievedOrder != null)
             {
-                CustomerId = order.CustomerId,
-                OrderPlaced = false
-            };
-
-            eo = _context.Add(eo).Entity;
-
-            _context.SaveChanges();
-
-            _context.ChangeTracker.Clear();
-
-            Order returnOrder = new Order()
+                return retrievedOrder;
+            } 
+            else
             {
-                CustomerId = eo.CustomerId,
-                Id = eo.Id,
-                OrderPlaced = eo.OrderPlaced
-            };
-            return returnOrder;
+                Order createdOrder = new Order()
+                {
+                    CustomerId = cust.Id,
+                    OrderPlaced = false
+                };
+                createdOrder = _context.Add(createdOrder).Entity;
+                _context.SaveChanges();
+                _context.ChangeTracker.Clear();
+                return createdOrder;
+            }
+        }
+        /// <summary>
+        /// Returns an Order given its Id.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>Order</returns>
+        public Order GetOrderById(int Id)
+        {
+            return (from o in _context.Orders
+                    where o.Id == Id
+                    select o).SingleOrDefault();
         }
 
         public OrderItem AddBrewToOrder(Order order, Brew brew, int quantity)
@@ -139,6 +150,26 @@ namespace DL
             };
             return returnOrderItem;
         }
+
+        public OrderItem AddBrewToOrder(int orderId, int brewId, int quantity)
+        {
+            OrderItem eoi = new OrderItem()
+            {
+                OrderId = orderId,
+                BrewId = brewId,
+                Quantity = quantity
+            };
+
+            eoi = _context.Add(eoi).Entity;
+
+            _context.SaveChanges();
+
+            _context.ChangeTracker.Clear();
+
+            return eoi;
+        }
+
+
 
         public Brew GetBrewById(int brewId)
         {
@@ -169,28 +200,36 @@ namespace DL
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
 
-            return brew;
+            return b;
         }
 
         public Order PlaceOrder(int orderId)
         {
-            Order eo = (from o in _context.Orders 
+            Order order = (from o in _context.Orders 
                                 where o.Id == orderId
                                 select o).SingleOrDefault();
 
-            eo.OrderPlaced = true;
+            order.OrderPlaced = true;
+            order.DateTimePlaced = DateTime.Now;
 
-            Order returnedOrder = new Models.Order() {
-                Id = eo.Id,
-                CustomerId = eo.CustomerId,
-                OrderPlaced = eo.OrderPlaced
-            };
+            List<OrderItem> oiList = GetOrderItems(orderId);
+
+            //Go through the list of order items and decrement each one based on the quantity in the cart.
+            foreach(OrderItem i in oiList)
+            {
+                Brew b = GetBrewById(i.BrewId);
+
+            }
+
+            Brew brew = (from b in _context.Brews
+                         where b.Id == )
 
             _context.SaveChanges();
-
             _context.ChangeTracker.Clear();
 
-            return returnedOrder;
+
+
+            return order;
         }
 
         public List<Customer> GetCustomers()
