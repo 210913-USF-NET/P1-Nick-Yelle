@@ -10,6 +10,7 @@ namespace Models
         //Properties.
         public int Id {get; set;}
         public int CustomerId{get; set;}
+        public int Total { get; set; }
         public bool OrderPlaced{get; set;}
         public DateTime DateTimePlaced {get; set;}
         //Add for sake of EFCore.

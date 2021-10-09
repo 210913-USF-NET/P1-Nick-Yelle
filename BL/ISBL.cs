@@ -18,9 +18,8 @@ namespace BL
         List<Brew> GetBrews(int BreweryId);
 
         Customer AddCustomer(Customer cust);
-
         Customer Login(Customer cust);
-
+        Customer GetCustomer(Order o);
         Order GetOrder(Customer cust);
         Order GetOrderById(int Id);
 

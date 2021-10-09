@@ -82,16 +82,23 @@ namespace WebUI.Controllers
             CustomerController.CurrentOrder = _bl.GetOrder(CustomerController.CurrentCustomer);
             return View(nameof(Index));
         }
-
-        public IActionResult Privacy()
-		{
-			return View();
-		}
-
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
-		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-		}
+        
+        public ActionResult Orders()
+        {
+            List<Order> orders = _bl.GetOrders(CustomerController.CurrentCustomer);
+            //Add up order total for each order.
+            foreach(Order o in orders)
+            {
+                int orderTotal = 0;
+                List<OrderItem> oiList= _bl.GetOrderItems(o.Id);
+                foreach(OrderItem oi in oiList)
+                {
+                    Brew brew = _bl.GetBrewById(oi.BrewId);
+                    orderTotal += brew.Price * oi.Quantity;
+                }
+                o.Total = orderTotal;
+            }
+            return View(orders);
+        }
 	}
 }

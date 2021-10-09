@@ -33,16 +33,17 @@ namespace WebUI.Controllers
             {
                 return RedirectToAction("Index", "Brewery");
             }
-            Customer confiremedCust = _bl.Login(cust);
-            CurrentCustomer = confiremedCust;
-            CurrentOrder = _bl.GetOrder(confiremedCust);
-            if (confiremedCust == null)
+            Customer confirmedCust = _bl.Login(cust);
+            if (confirmedCust == null)
             {
-                return RedirectToAction("Register");
+                bool failedLogin = true;
+                return RedirectToAction("Register", failedLogin);
             }
             else
             {
-                return RedirectToAction("Index", "Home", cust);
+                CurrentCustomer = confirmedCust;
+                CurrentOrder = _bl.GetOrder(confirmedCust);
+                return RedirectToAction("Index", "Home", confirmedCust);
             }
         }
         public ActionResult Register()
@@ -51,7 +52,7 @@ namespace WebUI.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(Customer cust)
+        public ActionResult Register(Customer cust, bool failedLogin)
         {
             try
             {

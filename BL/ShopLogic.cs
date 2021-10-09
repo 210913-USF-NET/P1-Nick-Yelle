@@ -43,6 +43,12 @@ namespace BL
             return _repo.Login(cust);
         }
 
+
+        Customer ISBL.GetCustomer(Order o)
+        {
+            return _repo.GetCustomer(o);
+        }
+
         public Order GetOrder(Customer cust)
         {
             return _repo.GetOrder(cust);
@@ -120,5 +126,7 @@ namespace BL
         {
             _repo.RemoveBrew(brew);
         }
+
+        
     }
 }

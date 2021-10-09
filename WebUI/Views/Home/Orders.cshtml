@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Models.Order>
+
+@{
+    ViewData["Title"] = "Orders";
+    Layout = "../Shared/_CustLayout.cshtml";
+}
+
+<h1>All Orders</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTimePlaced)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTimePlaced)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.ActionLink("ViewOrder", "ViewOrder", new { id = item.Id })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

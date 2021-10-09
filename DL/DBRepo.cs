@@ -91,6 +91,13 @@ namespace DL
             return custToCheck;
         }
 
+        public Customer GetCustomer(Order o)
+        {
+            return (from c in _context.Customers
+                    where o.CustomerId == c.Id
+                    select c).SingleOrDefault();
+        }
+
         public Order GetOrder(Customer cust)
         {
             Order retrievedOrder = (from o in _context.Orders
@@ -256,7 +263,8 @@ namespace DL
                     select new Models.Order(){
                         Id = o.Id,
                         CustomerId = o.CustomerId,
-                        OrderPlaced = o.OrderPlaced
+                        OrderPlaced = o.OrderPlaced,
+                        DateTimePlaced = o.DateTimePlaced
                     }).ToList();
         }
 
