@@ -36,6 +36,7 @@ namespace DL
         Customer AddCustomer(Customer cust);
         Customer Login(Customer cust);
         Customer GetCustomer(Order o);
+        Customer GetCustomer(int id);
 
         Order GetOrder(Customer cust);
         Order GetOrderById(int Id);
@@ -64,5 +65,10 @@ namespace DL
         void RemoveBrewery(Brewery brewery);
 
         void RemoveBrew(Brew brew);
-    }
+
+        Object Update(Object thing);
+        Object Add(Object thing);
+        void Remove(Object thing);
+    }   
+
 }

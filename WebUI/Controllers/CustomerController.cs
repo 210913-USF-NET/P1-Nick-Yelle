@@ -71,5 +71,63 @@ namespace WebUI.Controllers
                 return View();
             }
         }
+
+        public ActionResult Index()
+        {
+            List<Customer> allCustomers = _bl.GetCustomers();
+            return View(allCustomers);
+        }
+
+        // GET: RestaurantController/Delete/5
+        public ActionResult Delete(int id)
+        {
+            return View(_bl.GetCustomer(id));
+        }
+
+        // POST: RestaurantController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, Customer cust)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _bl.Remove(cust);
+                    return RedirectToAction(nameof(Index));
+                }
+                return RedirectToAction(nameof(Delete));
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Delete));
+            }
+        }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: BreweryController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Customer cust)
+        {
+            try
+            {
+                //Ensure valid data.
+                if (ModelState.IsValid)
+                {
+                    _bl.AddCustomer(cust);
+                    return RedirectToAction(nameof(Index));
+                }
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }

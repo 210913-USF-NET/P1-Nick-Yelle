@@ -20,6 +20,8 @@ namespace WebUI.Controllers
 			_bl = bl;
 		}
 
+        static OrderItem CurrentOrderItem = null;
+
 		public ActionResult Index()
 		{
 			return View(CustomerController.CurrentCustomer);
@@ -41,6 +43,7 @@ namespace WebUI.Controllers
                 Brew = _bl.GetBrewById(id),
                 Order = _bl.GetOrderById(id)
             };
+            CurrentOrderItem = newOi;
             return View(newOi);
         }
 
@@ -53,7 +56,9 @@ namespace WebUI.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _bl.AddBrewToOrder(oi.OrderId, oi.BrewId, oi.Quantity);
+                    
+                    _bl.AddBrewToOrder(CurrentOrderItem.OrderId, CurrentOrderItem.BrewId, oi.Quantity);
+                    CurrentOrderItem = null;
                     return RedirectToAction(nameof(Index));
                 }
                 return RedirectToAction(nameof(AddToCart));

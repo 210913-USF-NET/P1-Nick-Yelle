@@ -97,6 +97,12 @@ namespace DL
                     where o.CustomerId == c.Id
                     select c).SingleOrDefault();
         }
+        public Customer GetCustomer(int id)
+        {
+            return (from c in _context.Customers
+                    where c.Id == id
+                    select c).SingleOrDefault();
+        }
 
         public Order GetOrder(Customer cust)
         {
@@ -374,6 +380,29 @@ namespace DL
             };
 
             brewToDelete = _context.Brews.Remove(brewToDelete).Entity;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+        }
+
+        public object Update(object thing)
+        {
+            thing = _context.Update(thing).Entity;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+            return thing;
+        }
+
+        public object Add(object thing)
+        {
+            thing = _context.Add(thing).Entity;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+            return thing;
+        }
+
+        public void Remove(object thing)
+        {
+            thing = _context.Remove(thing).Entity;
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
         }

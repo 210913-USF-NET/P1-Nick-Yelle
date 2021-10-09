@@ -44,9 +44,13 @@ namespace BL
         }
 
 
-        Customer ISBL.GetCustomer(Order o)
+        public Customer GetCustomer(Order o)
         {
             return _repo.GetCustomer(o);
+        }
+        public Customer GetCustomer(int id)
+        {
+            return _repo.GetCustomer(id);
         }
 
         public Order GetOrder(Customer cust)
@@ -127,6 +131,19 @@ namespace BL
             _repo.RemoveBrew(brew);
         }
 
-        
+        public object Update(Object thing)
+        {
+            return _repo.Update(thing);
+        }
+
+        public object Add(Object thing)
+        {
+            return _repo.Add(thing);
+        }
+
+        public void Remove(Object thing)
+        {
+            _repo.Remove(thing);
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace BL
         Customer AddCustomer(Customer cust);
         Customer Login(Customer cust);
         Customer GetCustomer(Order o);
+        Customer GetCustomer(int id);
         Order GetOrder(Customer cust);
         Order GetOrderById(int Id);
 
@@ -41,10 +42,18 @@ namespace BL
         List<Order> GetOrders(Customer cust);
 
         void UpdateBrewery(Brewery brewery);
-
         void RemoveBrewery(Brewery brewery);
-
         void RemoveBrew(Brew brew);
+
+        /// <summary>
+        /// The best overloaded methods.
+        /// </summary>
+        /// <param name="thing"></param>
+        /// <returns></returns>
+        Object Update(Object thing);
+        Object Add(Object thing);
+        void Remove(Object thing);
+        
 
     }
 }
