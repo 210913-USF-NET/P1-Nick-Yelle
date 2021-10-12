@@ -126,49 +126,49 @@ namespace Tests
 
         }
 
-        [Fact]
-        public void CustomerControllerLoginReturnsCustomer()
-        {
-            //Arrange
-            var mockBl = new Mock<ISBL>();
-            mockBl.Setup(x => x.GetCustomers()).Returns(
-                new List<Customer>()
-                {
-                    new Customer()
-                    {
-                        Id = 1,
-                        UserName = "Nick Yelle",
-                        Password = "Yup"
-                    },
-                }
-            );
-            var controller = new CustomerController(mockBl.Object);
+        //[Fact]
+        //public void CustomerControllerLoginReturnsCustomer()
+        //{
+        //    //Arrange
+        //    var mockBl = new Mock<ISBL>();
+        //    mockBl.Setup(x => x.GetCustomers()).Returns(
+        //        new List<Customer>()
+        //        {
+        //            new Customer()
+        //            {
+        //                Id = 1,
+        //                UserName = "Nick Yelle",
+        //                Password = "Yup"
+        //            },
+        //        }
+        //    );
+        //    var controller = new CustomerController(mockBl.Object);
 
-            //Act.
-            var result = controller.Login();
+        //    //Act.
+        //    var result = controller.Login();
 
-            //Assert.
-            var viewResult = Assert.IsType<ViewResult>(result);
+        //    //Assert.
+        //    var viewResult = Assert.IsType<ViewResult>(result);
 
-            var model = Assert.IsAssignableFrom<Customer>(viewResult.ViewData.Model);
+        //    var model = Assert.IsAssignableFrom<Customer>(viewResult.ViewData.Model);
 
-            Assert.Equal("Nick Yelle", model.UserName);
-        }
+        //    Assert.Equal("Nick Yelle", model.UserName);
+        //}
 
-        public void MockTesting()
-        {
-            var mockBl = new Mock<ISBL>();
-            mockBl.Setup(x => x.GetCustomers()).Returns(
-               new List<Customer>()
-               {
-                    new Customer()
-                    {
-                        Id = 1,
-                        UserName = "Nick Yelle",
-                        Password = "Yup"
-                    },
-               }
-           );
-        }
+        //public void MockTesting()
+        //{
+        //    var mockBl = new Mock<ISBL>();
+        //    mockBl.Setup(x => x.GetCustomers()).Returns(
+        //       new List<Customer>()
+        //       {
+        //            new Customer()
+        //            {
+        //                Id = 1,
+        //                UserName = "Nick Yelle",
+        //                Password = "Yup"
+        //            },
+        //       }
+        //   );
+        //}
     }
 }

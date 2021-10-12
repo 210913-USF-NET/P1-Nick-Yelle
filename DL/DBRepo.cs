@@ -450,7 +450,7 @@ namespace DL
             return (from o in _context.Orders
                     where o.CustomerId == cust.Id &&
                     o.OrderPlaced == true
-                    orderby o.DateTimePlaced ascending
+                    orderby o.DateTimePlaced descending
                     select new Models.Order()
                     {
                         Id = o.Id,
@@ -466,7 +466,7 @@ namespace DL
             return (from o in _context.Orders
                     where o.CustomerId == cust.Id &&
                     o.OrderPlaced == true
-                    orderby o.DateTimePlaced descending
+                    orderby o.DateTimePlaced ascending
                     select new Models.Order()
                     {
                         Id = o.Id,
