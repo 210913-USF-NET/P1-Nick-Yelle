@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<Models.Brewery>
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "../Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "ShopBreweries";
+    Layout = "~/Views/Shared/_CustLayout.cshtml";
 }
 
-<h1>Breweries</h1>
+<h1>View</h1>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -24,7 +25,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.State)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -43,8 +43,7 @@
                 @Html.DisplayFor(modelItem => item.State)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                @Html.ActionLink("See Brews", "ShopBrewsByBrewery", new {Id = item.Id})
             </td>
         </tr>
 }

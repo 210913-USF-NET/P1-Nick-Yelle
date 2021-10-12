@@ -40,6 +40,7 @@ namespace DL
 
         Order GetOrder(Customer cust);
         Order GetOrderById(int Id);
+        Order UpdateOrderTotal(Order o);
 
         OrderItem AddBrewToOrder(Order order, Brew brew, int quantity);
         OrderItem AddBrewToOrder(int orderId, int BrewId, int quantity);

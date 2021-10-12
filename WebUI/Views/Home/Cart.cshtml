@@ -19,7 +19,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order.Total)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -37,12 +39,25 @@
                 </td>
             </tr>
         }
-        <p>
-            <a asp-action="PlaceOrder">Place Order</a>
-        </p>
     </tbody>
+    <tfoot>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order.Total)
+            </td>
+        </tr>
+        break;
+        }
+    </tfoot>
 </table>
-
 <p>
-    <a asp-action="Index">Go Back</a>
+    <a asp-action="PlaceOrder">Place Order</a>
 </p>

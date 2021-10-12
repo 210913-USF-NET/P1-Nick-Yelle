@@ -13,7 +13,9 @@ namespace BL
     {   
         Brewery GetBreweryById(int id);
         Brewery AddBrewery(Brewery b);
+
         List<Brewery> GetBreweries();
+
         List<Brew> GetBrews();
         List<Brew> GetBrews(int BreweryId);
 
@@ -21,8 +23,10 @@ namespace BL
         Customer Login(Customer cust);
         Customer GetCustomer(Order o);
         Customer GetCustomer(int id);
+
         Order GetOrder(Customer cust);
         Order GetOrderById(int Id);
+        Order PlaceOrder(int orderId);
 
         OrderItem AddBrewToOrder(Order order, Brew brew, int quantity);
         OrderItem AddBrewToOrder(int orderId, int BrewId, int quantity);
@@ -30,12 +34,10 @@ namespace BL
         List<OrderItem> GetOrderItems(int orderId);
 
         Brew GetBrewById(int brewId);
-
         Brew UpdateBrew(Brew brew);
-
         Brew AddBrew(Brew brew);
 
-        Order PlaceOrder(int orderId);
+        
 
         List<Customer> GetCustomers();
 

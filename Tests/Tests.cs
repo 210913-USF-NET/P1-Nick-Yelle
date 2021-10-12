@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Tests
 {
-    public class ModelTests
+    public class Tests
     {
         [Fact]
         public void BrewsShouldSetValidData()

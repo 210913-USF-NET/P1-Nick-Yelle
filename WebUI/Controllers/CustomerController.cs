@@ -46,6 +46,25 @@ namespace WebUI.Controllers
                 return RedirectToAction("Index", "Home", confirmedCust);
             }
         }
+
+        public ActionResult OrderHistory(int id)
+        {
+            Customer cust = _bl.GetCustomer(id);
+            List<Order> orders = _bl.GetOrders(cust);
+
+            return View(orders);
+        }
+
+        public ActionResult ViewItems(int id)
+        {
+            List<OrderItem> oiList = _bl.GetOrderItems(id);
+            foreach(OrderItem oi in oiList)
+            {
+                oi.Brew = _bl.GetBrewById(oi.BrewId);
+            }
+            return View(oiList);
+        }
+
         public ActionResult Register()
         {
             return View();
@@ -59,9 +78,12 @@ namespace WebUI.Controllers
                 //Ensure valid data.
                 if (ModelState.IsValid)
                 {
-                    if(_bl.AddCustomer(cust) != null)
+                    Customer customer = _bl.AddCustomer(cust);
+                    if(customer != null)
                     {
-                        return RedirectToAction("Index", "Home");
+                        CurrentCustomer = customer;
+                        CurrentOrder = _bl.GetOrder(customer);
+                        return RedirectToAction("Index", "Home", customer);
                     }
                 }
                 return RedirectToAction(nameof(Register));

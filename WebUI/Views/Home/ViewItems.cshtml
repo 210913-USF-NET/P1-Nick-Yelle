@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Models.OrderItem>
+
+@{
+    ViewData["Title"] = "ViewItems";
+    Layout = "~/Views/Shared/_CustLayout.cshtml";
+}
+
+<h1>ViewItems</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Brew
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brew.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="Orders">Go Back</a>
+</p>

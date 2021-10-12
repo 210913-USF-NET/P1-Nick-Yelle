@@ -23,6 +23,7 @@ namespace DL
         //Methods.
         public List<OrderItem> GetOrderItems(int orderId)
         {
+
             return (from oi in _context.OrderItems 
                         where oi.OrderId == orderId 
                         select new Models.OrderItem{
@@ -85,10 +86,9 @@ namespace DL
 
         public Customer Login(Customer cust)
         {
-            Customer custToCheck = (from c in _context.Customers
-                                    where cust.UserName == c.UserName
-                                    select c).SingleOrDefault();
-            return custToCheck;
+            return (from c in _context.Customers
+                    where cust.UserName == c.UserName
+                    select c).SingleOrDefault();
         }
 
         public Customer GetCustomer(Order o)
@@ -141,6 +141,7 @@ namespace DL
 
         public OrderItem AddBrewToOrder(Order order, Brew brew, int quantity)
         {
+            
             OrderItem eoi = new OrderItem()
             {
                 OrderId = order.Id,
@@ -161,11 +162,13 @@ namespace DL
                 BrewId = eoi.BrewId,
                 Quantity = eoi.Quantity
             };
+            UpdateOrderTotal(order);
             return returnOrderItem;
         }
 
         public OrderItem AddBrewToOrder(int orderId, int brewId, int quantity)
         {
+            
             OrderItem eoi = new OrderItem()
             {
                 OrderId = orderId,
@@ -178,7 +181,7 @@ namespace DL
             _context.SaveChanges();
 
             _context.ChangeTracker.Clear();
-
+            UpdateOrderTotal(orderId);
             return eoi;
         }
 
@@ -223,10 +226,12 @@ namespace DL
             Order order = (from o in _context.Orders 
                                 where o.Id == orderId
                                 select o).SingleOrDefault();
-
+            
+            UpdateOrderTotal(orderId);
             order.OrderPlaced = true;
             order.DateTimePlaced = DateTime.Now;
 
+            _context.Update(order);
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
 
@@ -270,7 +275,8 @@ namespace DL
                         Id = o.Id,
                         CustomerId = o.CustomerId,
                         OrderPlaced = o.OrderPlaced,
-                        DateTimePlaced = o.DateTimePlaced
+                        DateTimePlaced = o.DateTimePlaced,
+                        Total = o.Total
                     }).ToList();
         }
 
@@ -309,7 +315,9 @@ namespace DL
 
         public List<Brew> GetBrews(int BreweryId)
         {
-            throw new NotImplementedException();
+            return (from b in _context.Brews
+                    where b.BreweryId == BreweryId
+                    select b).ToList();
         }
 
         public Brew UpdateBrew(Brew brew)
@@ -405,6 +413,37 @@ namespace DL
             thing = _context.Remove(thing).Entity;
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
+        }
+
+        public Order UpdateOrderTotal(Order o)
+        {
+            List<OrderItem> oiList = GetOrderItems(o.Id);
+            int total = 0;
+            foreach(OrderItem oi in oiList)
+            {
+                total += GetBrewById(oi.BrewId).Price * oi.Quantity;
+            }
+            o.Total = total;
+            o = _context.Update(o).Entity;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+            return o;
+        }
+
+        public Order UpdateOrderTotal(int OrderId)
+        {
+            List<OrderItem> oiList = GetOrderItems(OrderId);
+            int total = 0;
+            foreach (OrderItem oi in oiList)
+            {
+                total += GetBrewById(oi.BrewId).Price * oi.Quantity;
+            }
+            Order o = GetOrderById(OrderId);
+            o.Total = total;
+            o = _context.Update(o).Entity;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+            return o;
         }
     }
 }

@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Tests
 {
-    public class ModelsTests
+    public class ModelTests
     {
         [Fact]
         public void BrewShouldCreate()
