@@ -42,6 +42,10 @@ namespace BL
         List<Customer> GetCustomers();
 
         List<Order> GetOrders(Customer cust);
+        List<Order> GetOrdersNewToOld(Customer cust);
+        List<Order> GetOrdersOldToNew(Customer cust);
+        List<Order> GetOrdersHighToLow(Customer cust);
+        List<Order> GetOrdersLowToHigh(Customer cust);
 
         void UpdateBrewery(Brewery brewery);
         void RemoveBrewery(Brewery brewery);

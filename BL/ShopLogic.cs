@@ -145,5 +145,25 @@ namespace BL
         {
             _repo.Remove(thing);
         }
+
+        public List<Order> GetOrdersNewToOld(Customer cust)
+        {
+            return _repo.GetOrdersNewToOld(cust);
+        }
+
+        public List<Order> GetOrdersOldToNew(Customer cust)
+        {
+            return _repo.GetOrdersOldToNew(cust);
+        }
+
+        public List<Order> GetOrdersHighToLow(Customer cust)
+        {
+            return _repo.GetOrdersHighToLow(cust);
+        }
+
+        public List<Order> GetOrdersLowToHigh(Customer cust)
+        {
+            return _repo.GetOrdersLowToHigh(cust);
+        }
     }
 }

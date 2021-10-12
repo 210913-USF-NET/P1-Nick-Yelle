@@ -58,6 +58,10 @@ namespace DL
         List<Customer> GetCustomers();
 
         List<Order> GetOrders(Customer c);
+        List<Order> GetOrdersNewToOld(Customer cust);
+        List<Order> GetOrdersOldToNew(Customer cust);
+        List<Order> GetOrdersHighToLow(Customer cust);
+        List<Order> GetOrdersLowToHigh(Customer cust);
 
         Brewery AddBrewery(Brewery b);
 

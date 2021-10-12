@@ -6,7 +6,18 @@
 }
 
 <h1>Order History</h1>
-
+<a>
+    @Html.ActionLink("Most Recent", "OrderHistory", new { sortOrder = "NewToOld"  })
+</a>
+<a>
+    @Html.ActionLink("Oldest", "OrderHistory", new { sortOrder = "OldToNew" })
+</a>
+<a>
+    @Html.ActionLink("Most Expensive", "OrderHistory", new { sortOrder = "HighToLow" })
+</a>
+<a>
+    @Html.ActionLink("Cheapest", "OrderHistory", new { sortOrder = "LowToHigh" })
+</a>
 <table class="table">
     <thead>
         <tr>

@@ -47,11 +47,28 @@ namespace WebUI.Controllers
             }
         }
 
-        public ActionResult OrderHistory(int id)
+        public ActionResult OrderHistory(int id, string sortOrder)
         {
             Customer cust = _bl.GetCustomer(id);
-            List<Order> orders = _bl.GetOrders(cust);
-
+            List<Order> orders = new List<Order>();
+            switch(sortOrder)
+            {
+                case "HighToLow":
+                    orders = _bl.GetOrdersHighToLow(cust);
+                    break;
+                case "LowToHigh":
+                    orders = _bl.GetOrdersLowToHigh(cust);
+                    break;
+                case "NewToOld":
+                    orders = _bl.GetOrdersNewToOld(cust);
+                    break;
+                case "OldToNew":
+                    orders = _bl.GetOrdersOldToNew(cust);
+                    break;
+                default:
+                    orders = _bl.GetOrders(cust);
+                    break;
+            }
             return View(orders);
         }
 

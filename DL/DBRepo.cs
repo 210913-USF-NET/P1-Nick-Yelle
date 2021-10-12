@@ -23,7 +23,6 @@ namespace DL
         //Methods.
         public List<OrderItem> GetOrderItems(int orderId)
         {
-
             return (from oi in _context.OrderItems 
                         where oi.OrderId == orderId 
                         select new Models.OrderItem{
@@ -444,6 +443,70 @@ namespace DL
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
             return o;
+        }
+
+        public List<Order> GetOrdersNewToOld(Customer cust)
+        {
+            return (from o in _context.Orders
+                    where o.CustomerId == cust.Id &&
+                    o.OrderPlaced == true
+                    orderby o.DateTimePlaced ascending
+                    select new Models.Order()
+                    {
+                        Id = o.Id,
+                        CustomerId = o.CustomerId,
+                        OrderPlaced = o.OrderPlaced,
+                        DateTimePlaced = o.DateTimePlaced,
+                        Total = o.Total
+                    }).ToList();
+        }
+
+        public List<Order> GetOrdersOldToNew(Customer cust)
+        {
+            return (from o in _context.Orders
+                    where o.CustomerId == cust.Id &&
+                    o.OrderPlaced == true
+                    orderby o.DateTimePlaced descending
+                    select new Models.Order()
+                    {
+                        Id = o.Id,
+                        CustomerId = o.CustomerId,
+                        OrderPlaced = o.OrderPlaced,
+                        DateTimePlaced = o.DateTimePlaced,
+                        Total = o.Total
+                    }).ToList();
+        }
+
+        public List<Order> GetOrdersHighToLow(Customer cust)
+        {
+            return (from o in _context.Orders
+                    where o.CustomerId == cust.Id &&
+                    o.OrderPlaced == true
+                    orderby o.Total descending
+                    select new Models.Order()
+                    {
+                        Id = o.Id,
+                        CustomerId = o.CustomerId,
+                        OrderPlaced = o.OrderPlaced,
+                        DateTimePlaced = o.DateTimePlaced,
+                        Total = o.Total
+                    }).ToList();
+        }
+
+        public List<Order> GetOrdersLowToHigh(Customer cust)
+        {
+            return (from o in _context.Orders
+                    where o.CustomerId == cust.Id &&
+                    o.OrderPlaced == true
+                    orderby o.Total ascending
+                    select new Models.Order()
+                    {
+                        Id = o.Id,
+                        CustomerId = o.CustomerId,
+                        OrderPlaced = o.OrderPlaced,
+                        DateTimePlaced = o.DateTimePlaced,
+                        Total = o.Total
+                    }).ToList();
         }
     }
 }
